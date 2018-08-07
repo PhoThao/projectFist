@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<input type="text" id="edit-text" placeholder="Nhap gia tri can sua"></input>
+	<button id="sa-ve">Luu</button>
+	<script type="text/javascript">
+		var url = 'http://localhost:3000/todos';
+		var text = document.getElementById("edit-text");
+		var save = document.getElementById("sa-ve")
+		save.addEventListener("click",onSave);
+		
+		var i = parseInt(window.location.hash.substring(1))	 + 1;
+		axios.get(url).then(function(res){
+		res.data.filter(function(item){
+			if(i === item.id)
+			{
+				text.value = item.content;
+			}
+		})			
+});
+		function onSave(){
+			var update = {
+				content: text.value
+			}
+			axios.put(url + '/' + i,update).then(function(res){
+				console.log(res);
+			})
+			window.location.href  = '/E:project1/index.html'
+		}
+	</script>
+	
+</body>
+</html>

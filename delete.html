@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<ul id='item-li'>
+		
+	</ul>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script type="text/javascript">
+	var htmlList = document.getElementById('item-li');
+	htmlList.addEventListener('click', onListClicked);
+	var url = 'http://localhost:3000/todos';
+	axios.get(url).then(function(res){
+		var items = res.data;
+		render(items);
+	})
+	function onListClicked() {
+ 	var btn = event.target;
+    var i = parseInt(btn.dataset.id);
+
+	axios.get(url).then(function(res) {
+   	axios.delete(url + `/${res.data[i].id}`,	);	
+	/*Url là localhost 9081 rùi, h muốn xoá cái j thì thêm gạch chéo rồi sau đó là id của nó. Ví dụ muốn xoá cái có id 4 thì vào url của nó là localhost:9081/4 bằng cách: -  Res.data sẽ ra dữ liệu của todos là 1 array các objcect nên muốn vào 1 cái thôi thì res.data[i] xong ra  là : { id: 4, content: .....}, Thì muốn lấy id thì bấm res.data[i].id. Còn thẻ 2 dấu huyền là dành cho dạng string, thêm số thì phải có ${} */   
+	window.location.href = '/E:/project1/index.html';	
+  });
+}
+function render(items){
+		var htmlList = document.getElementById('item-li');
+		var content = items.map(function(item,i){
+			console.log(item);
+			return '<li>' + item.content + '<button data-id="'+i+'">delete</button></li>';
+		});
+		htmlList.innerHTML = content.join('');
+
+	}	
+
+	</script>
+</body>
+</html>

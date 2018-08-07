@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document object</title>
+</head>
+<body>
+	<button id="add-item">Add Item</button>
+	<button id="del-ete">Delele</button>
+	<ul id='item-li'>
+		
+	</ul>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script type="text/javascript">
+	
+	var htmlList = document.getElementById('item-li');
+	var additem = document.getElementById('add-item');
+	additem.addEventListener("click", goItem);
+	var deletew = document.getElementById('del-ete');
+	deletew.addEventListener('click', goDelete);
+	htmlList.addEventListener('click', goEdit)
+	var url = 'http://localhost:3000/todos';
+	axios.get(url).then(function(res){
+		var items = res.data;
+		render(items);
+	})
+	function goEdit(event){
+		var btn = event.target;
+		var i = parseInt(btn.dataset.id);
+		window.location.href = '/E:/project1/edit.html#'+i;
+	}
+	function goItem(){
+		window.location.href = '/E:/project1/add-item.html';
+	}
+	function goDelete(){
+			window.location.href = '/E:/project1/delete.html'; 
+	}
+	
+	function render(items){
+		var content = items.map(function(item,i){
+			console.log(item);
+			return '<li>'+  item.content + '<button data-id="'+i+'">edit</button></li>';
+		});
+		htmlList.innerHTML = content.join('');
+
+	}	
+</script>
+</body>
+</html>
